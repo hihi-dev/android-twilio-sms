@@ -4,12 +4,13 @@ import android.content.Context;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
+import static com.hihi.twiliosms.EncodeBase64.encodeCredentials;
 import static com.hihi.twiliosms.TwilioMessageBody.KEY_MEDIA;
 import static com.hihi.twiliosms.TwilioMessageBody.KEY_MEDIA_LIST;
 
@@ -46,25 +47,27 @@ public class Twilio {
             else
                 isFirst = false;
 
-            if (key.equals(KEY_MEDIA_LIST))
-                params.get(key).forEach(data -> stringBuilder.append(KEY_MEDIA).append("=").append(encodePostData(data)));
-            else
-                params.get(key).forEach(data -> stringBuilder.append(key).append("=").append(encodePostData(data)));
+            if (key.equals(KEY_MEDIA_LIST)) {
+                if (params.get(key) != null)
+                for (String data : Objects.requireNonNull(params.get(key)))
+                    stringBuilder.append(KEY_MEDIA).append("=").append(encodePostData(data));
+            }
+            else {
+                if (params.get(key) != null)
+                    for (String data : Objects.requireNonNull(params.get(key)))
+                        stringBuilder.append(key).append("=").append(encodePostData(data));
+            }
         }
         return stringBuilder.toString();
     }
 
     private static String encodePostData(String data) {
         try {
-            return URLEncoder.encode(data, StandardCharsets.UTF_8.name());
+            return URLEncoder.encode(data, Charset.forName("UTF-8").name());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private static String encodeCredentials(String sid, String token) {
-        return "Basic " + Base64.getEncoder().encodeToString((sid + ":" + token).getBytes());
     }
 
     private static String formatUrl(String sid) {
