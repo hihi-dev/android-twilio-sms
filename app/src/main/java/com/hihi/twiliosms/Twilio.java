@@ -7,7 +7,6 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import static com.hihi.twiliosms.EncodeBase64.encodeCredentials;
@@ -47,16 +46,12 @@ public class Twilio {
             else
                 isFirst = false;
 
-            if (key.equals(KEY_MEDIA_LIST)) {
-                if (params.get(key) != null)
-                for (String data : Objects.requireNonNull(params.get(key)))
+            if (key.equals(KEY_MEDIA_LIST))
+                for (String data : params.get(key))
                     stringBuilder.append(KEY_MEDIA).append("=").append(encodePostData(data));
-            }
-            else {
-                if (params.get(key) != null)
-                    for (String data : Objects.requireNonNull(params.get(key)))
-                        stringBuilder.append(key).append("=").append(encodePostData(data));
-            }
+            else
+                for (String data : params.get(key))
+                    stringBuilder.append(key).append("=").append(encodePostData(data));
         }
         return stringBuilder.toString();
     }
