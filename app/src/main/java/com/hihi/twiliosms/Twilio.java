@@ -38,20 +38,13 @@ public class Twilio {
     private String buildPostData(HashMap<String, List<String>> params) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        boolean isFirst = true;
         for (String key : params.keySet()) {
+            stringBuilder.append("&");
 
-            if (!isFirst)
-                stringBuilder.append("&");
-            else
-                isFirst = false;
-
-            if (key.equals(KEY_MEDIA_LIST))
-                for (String data : params.get(key))
-                    stringBuilder.append(KEY_MEDIA).append("=").append(encodePostData(data));
-            else
-                for (String data : params.get(key))
-                    stringBuilder.append(key).append("=").append(encodePostData(data));
+            final String value = (KEY_MEDIA_LIST.equals(key)) ? KEY_MEDIA : key;
+            for (String data : params.get(key)) {
+                stringBuilder.append(value).append("=").append(encodePostData(data));
+            }
         }
         return stringBuilder.toString();
     }
