@@ -1,10 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'twiliosms'
+    bintrayRepo = 'AndroidTwilioSMS'
+    bintrayName = 'android-twilio-sms'
 
-    publishedGroupId = 'com.hihi.twiliosms'
+    publishedGroupId = 'com.hihi'
     libraryName = 'TwilioSms'
     artifact = 'twiliosms'
 
