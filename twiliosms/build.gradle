@@ -6,7 +6,7 @@ ext {
     bintrayRepo = 'AndroidTwilioSMS'
     bintrayName = 'android-twilio-sms'
 
-    publishedGroupId = 'com.hihi'
+    publishedGroupId = 'com.github.hihi-dev'
     libraryName = 'TwilioSms'
     artifact = 'twiliosms'
 
