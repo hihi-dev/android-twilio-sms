@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/hihi-dev/android-twilio-sms'
     gitUrl = 'https://github.com/hihi-dev/android-twilio-sms.git'
 
-    libraryVersion = '0.1.0'
+    libraryVersion = '0.1.1'
 
     developerId = 'jbreen'
     developerName = 'Jake Breen'
