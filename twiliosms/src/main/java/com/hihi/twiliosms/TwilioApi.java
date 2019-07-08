@@ -22,7 +22,6 @@ class TwilioApi {
     }
 
     Callable<TwilioResponse> call(String url, String auth, String data) {
-
         return () -> {
             int responseCode = 0;
             String messageBody = null;
@@ -59,15 +58,18 @@ class TwilioApi {
 
             try {
                 BufferedReader reader;
+                String input;
                 if (responseCode >= 200 && responseCode <= 299) {
+                    StringBuilder stringBuilder = new StringBuilder();
                     InputStream inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
                     reader = new BufferedReader(new InputStreamReader(inputStream));
-                    while (reader.readLine() != null)
-                        messageBody = XmlParser.parseBody(new StringReader(reader.readLine()));
+                    while ((input = reader.readLine()) != null)
+                        stringBuilder.append(input);
+                    messageBody = XmlParser.parseBody(new StringReader(stringBuilder.toString()));
                 } else {
                     reader = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
-                    while (reader.readLine() != null)
-                        errorCode = XmlParser.parseError(new StringReader(reader.readLine()));
+                    while ((input = reader.readLine()) != null)
+                        errorCode = XmlParser.parseError(new StringReader(input));
                 }
 
             } catch (IOException e) {
@@ -90,6 +92,5 @@ class TwilioApi {
         else
             return response.error(responseCode, errorCode);
     }
-
 
 }
