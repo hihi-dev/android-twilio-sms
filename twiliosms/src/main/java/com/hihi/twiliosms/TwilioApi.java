@@ -60,10 +60,12 @@ class TwilioApi {
                 BufferedReader reader;
                 String input;
                 if (responseCode >= 200 && responseCode <= 299) {
+                    StringBuilder stringBuilder = new StringBuilder();
                     InputStream inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
                     reader = new BufferedReader(new InputStreamReader(inputStream));
                     while ((input = reader.readLine()) != null)
-                        messageBody = XmlParser.parseBody(new StringReader(input));
+                        stringBuilder.append(input);
+                    messageBody = XmlParser.parseBody(new StringReader(stringBuilder.toString()));
                 } else {
                     reader = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
                     while ((input = reader.readLine()) != null)
