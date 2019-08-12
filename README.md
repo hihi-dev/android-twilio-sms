@@ -1,6 +1,8 @@
 # android-twilio-sms
 A simple Android library for Twilio Programmable SMS https://www.twilio.com/sms
 
+Use with maven: ```implementation 'com.github.hihi-dev:twiliosms:0.1.1'```
+
 # How to use
 Create an instance of the Twilio library in your application, providing application context and String values of your TwilioSID and TwilioAuth tokens.
 
